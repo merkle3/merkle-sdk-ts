@@ -32,7 +32,7 @@ merkle.pool.auctions().on(auction => {
 
 ### Stream transactions
 
-Stream transactions from Merkle's private network of transaction on Ethereum.
+Stream transactions from Merkle's private network of transaction on Ethereum. [Learn more](https://docs.usemerkle.com/transaction-stream/what-is-merkle-transaction-stream)
 
 ```typescript
 import Merkle from '@mkl3/sdk'
