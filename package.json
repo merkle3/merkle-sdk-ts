@@ -12,7 +12,6 @@
     }
   },
   "scripts": {
-    "publish": "npm run build && npm publish",
     "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup"
   },
   "repository": {

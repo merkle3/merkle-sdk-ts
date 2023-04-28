@@ -39,7 +39,7 @@ import Merkle from '@mkl3/sdk'
 
 const merkle = new Merkle('<API KEY>') // optional, get one at mbs.usemerkle.com
 
-merkle.transactions.stream().on((tx: ethers.Transaction) => {
+merkle.transactions.stream().on(tx => {
     console.log('tx from: ', tx.from)
 })
 ```
