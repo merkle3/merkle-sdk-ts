@@ -1,4 +1,4 @@
-[Logo](public/logo.png)
+![Logo](public/logo.png)
 
 **Merkle is building crypto infrastructure**. [Join us on discord](https://discord.gg/Q9Dc7jVX6c).
 
