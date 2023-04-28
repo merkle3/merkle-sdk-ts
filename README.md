@@ -25,9 +25,23 @@ import Merkle from '@mkl3/sdk'
 
 const merkle = new Merkle('<API KEY>') // optional, get one at mbs.usemerkle.com
 
+// stream auctions and make bids
 merkle.pool.auctions().on(auction => {
     console.log('new auction: ', auction)
+
+    // construct a backrun
+    const backrun = "0x,,,,"
+
+    // make a bid
+    merkle.pool.bid(auction.transaction.hash, backrun)
 })
+
+// send new transactions for auctions
+merkle.pool.send(tx, { // a signed ethers.Transaction
+    // optional parameters
+    feeRecipient: "0x", // where to receive the bid revenue, defaults to the tx.from
+    hints: [] // what hints to provide to searchers, see https://docs.usemerkle.com/private-pool/privacy
+}) 
 ```
 
 ### Stream transactions
