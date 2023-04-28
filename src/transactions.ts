@@ -4,6 +4,7 @@ import {credentials, loadPackageDefinition} from "@grpc/grpc-js";
 import {ServiceClientConstructor} from "@grpc/grpc-js/build/src/make-client";
 import { TypedEvent } from "./utils/typed-events";
 import { ethers } from "ethers";
+import Backoff from "./utils/backoff";
 
 class Transactions {
     private _sdk: MerkleSDK;
@@ -27,19 +28,30 @@ class Transactions {
         const protoDescriptor = loadPackageDefinition(packageDefinition)
 
         const BrokerApi = (protoDescriptor.usemerkle as any).com.broker.proto.BrokerApi as ServiceClientConstructor
+        const apikey = this._sdk.apiKey
+        const timeout = new Backoff()
 
-        const client = new BrokerApi('txs.usemerkle.com:80', credentials.createInsecure())
+        function connect() {
+            const client = new BrokerApi('txs.usemerkle.com:80', credentials.createInsecure())
 
-        const stream = client.StreamReceivedTransactions({
-            api_key: this._sdk.apiKey,
-            chain_id: chainId
-        })
+            const stream = client.StreamReceivedTransactions({
+                api_key: apikey,
+                chain_id: chainId
+            })
 
-          stream.on('data', (message: { txHash: string; txBytes: string }) => {
-            const transaction = ethers.Transaction.from('0x' + message.txBytes)
+            stream.on('data', (message: { txHash: string; txBytes: string }) => {
+                const transaction = ethers.Transaction.from('0x' + message.txBytes)
 
-            txStream.emit(transaction)
-        })
+                txStream.emit(transaction)
+            })
+
+            // on error
+            stream.on('error', (error: any) => {
+                setTimeout(connect, timeout.next())  
+            })
+        }
+
+        connect()
 
         return txStream
     }

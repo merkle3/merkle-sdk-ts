@@ -1,6 +1,6 @@
-import EventEmitter from "events";
 import MerkleSDK from "./sdk";
 import WebSocket from 'ws'
+import Backoff from "./utils/backoff";
 import { TypedEvent } from "./utils/typed-events";
 
 type Auction = {
@@ -27,17 +27,27 @@ class PrivatePool {
 
     auctions(): TypedEvent<Auction> {
         const emitter = new TypedEvent<Auction>();
+        let timeout = new Backoff()
 
-        // open the websocket
-        const conn = new WebSocket('wss://pool.usemerkle.com/stream/auctions');
+        function connect() {
+            // open the websocket
+            const conn = new WebSocket('wss://pool.usemerkle.com/stream/auctions');
 
-        // listen for messages
-        conn.onmessage = function (event: any) {
-            const data = JSON.parse(event.data) as Auction;
+            // listen for messages
+            conn.onmessage = function (event: any) {
+                const data = JSON.parse(event.data) as Auction;
 
-            // emit the event
-            emitter.emit(data);
-        };
+                // emit the event
+                emitter.emit(data);
+            };
+
+            // on close, reconnect
+            conn.onclose = function () {
+                setTimeout(connect, timeout.next());
+            };
+        }
+
+        connect()
 
         return emitter;
     }
