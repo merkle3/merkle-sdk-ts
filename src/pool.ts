@@ -25,7 +25,7 @@ class PrivatePool {
         this._sdk = sdk;
     }
 
-    stream(): TypedEvent<Auction> {
+    auctions(): TypedEvent<Auction> {
         const emitter = new TypedEvent<Auction>();
 
         // open the websocket

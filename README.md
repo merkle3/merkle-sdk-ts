@@ -25,7 +25,7 @@ import Merkle from '@mkl3/sdk'
 
 const sdk = new Merkle('<API KEY>') // optional, get one at mbs.usemerkle.com
 
-sdk.pool.auction().on(auction => {
+sdk.pool.auctions().on(auction => {
     console.log('new auction: ', auction)
 })
 ```
