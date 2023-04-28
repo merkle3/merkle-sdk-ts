@@ -30,7 +30,7 @@ merkle.pool.auctions().on(auction => {
     console.log('new auction: ', auction)
 
     // construct a backrun
-    const backrun = "0x,,,,"
+    const backrun = "0x...."
 
     // make a bid
     merkle.pool.bid(auction.transaction.hash, backrun)
