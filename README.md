@@ -26,7 +26,7 @@ import Merkle from '@mkl3/sdk'
 const merkle = new Merkle('<API KEY>') // optional, get one at mbs.usemerkle.com
 
 // stream auctions and make bids
-merkle.pool.auctions().on(auction => {
+merkle.pool.auctions().on('auction', auction => {
     console.log('new auction: ', auction)
 
     // construct a backrun
@@ -34,7 +34,7 @@ merkle.pool.auctions().on(auction => {
 
     // make a bid
     merkle.pool.bid(auction.transaction.hash, backrun)
-})
+}).on('error', console.log)
 
 // send new transactions for auctions
 merkle.pool.send(tx, { // a signed ethers.Transaction
@@ -53,7 +53,7 @@ import Merkle from '@mkl3/sdk'
 
 const merkle = new Merkle('<API KEY>') // optional, get one at mbs.usemerkle.com
 
-merkle.transactions.stream().on(tx => {
+merkle.transactions.stream().on('transaction', tx => {
     console.log('tx from: ', tx.from)
-})
+}).on('error', console.log)
 ```

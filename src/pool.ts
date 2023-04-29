@@ -1,7 +1,7 @@
 import MerkleSDK from "./sdk";
 import WebSocket from 'ws'
 import Backoff from "./utils/backoff";
-import { TypedEvent } from "./utils/typed-events";
+import { TypedEventEmitter } from "./utils/typed-events";
 import { ethers } from 'ethers'
 import fetch from 'node-fetch';
 
@@ -37,6 +37,11 @@ type SendTransactionOptions = {
     hints?: PrivacyHint[];
 }
 
+type PrivatePoolStreamEvents = {
+    'auction': [Auction],
+    'error': [Error]
+}
+
 class PrivatePool {
     private _sdk: MerkleSDK;
 
@@ -44,8 +49,8 @@ class PrivatePool {
         this._sdk = sdk;
     }
 
-    auctions(): TypedEvent<Auction> {
-        const emitter = new TypedEvent<Auction>();
+    auctions(): TypedEventEmitter<PrivatePoolStreamEvents> {
+        const emitter = new TypedEventEmitter<PrivatePoolStreamEvents>();
         let timeout = new Backoff()
 
         function connect() {
@@ -57,7 +62,13 @@ class PrivatePool {
                 const data = JSON.parse(event.data) as Auction;
 
                 // emit the event
-                emitter.emit(data);
+                emitter.emit('auction', data);
+            };
+
+            // on error
+            conn.onerror = function (event: WebSocket.ErrorEvent) {
+                // pass the error to the typed stream
+                emitter.emit('error', event.error);
             };
 
             // on close, reconnect
