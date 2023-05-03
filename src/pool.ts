@@ -146,6 +146,10 @@ class PrivatePool {
         if (res.status !== 200) {
             throw new Error(await res.text())
         }
+
+        const data = await res.json()
+
+        return data
     }  
 }
  

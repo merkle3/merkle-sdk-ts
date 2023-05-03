@@ -9,3 +9,7 @@ cat >dist/mjs/package.json <<!EOF
     "type": "module"
 }
 !EOF
+
+# copy proto
+cp -r proto dist/cjs/proto
+cp -r proto dist/mjs/proto

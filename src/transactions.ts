@@ -20,7 +20,8 @@ class Transactions {
 
     stream(chainId = 1): TypedEventEmitter<TypedEventEmitterEvents> {
         const txStream = new TypedEventEmitter<TypedEventEmitterEvents>();
-        const PROTO_PATH = './proto/broker.proto'
+        const pwd = __dirname
+        const PROTO_PATH = pwd + '/proto/broker.proto'
 
         const packageDefinition = loadSync(PROTO_PATH, {
             keepCase: true,
