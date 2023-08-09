@@ -8,6 +8,7 @@ import fetch from 'node-fetch';
 type Auction = {
     id: string;
     closes_at: string;
+    chain_id: number;
     created_at: string;
     fee_recipient: string;
     transaction: {
