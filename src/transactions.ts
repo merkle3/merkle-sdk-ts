@@ -31,14 +31,9 @@ class Transactions {
             // connect to websocket
             const ws = new WebSocket(`wss://txs.merkle.io/ws/${me._sdk.apiKey}`)
 
-            // on open
-            ws.on('open', () => {
-                console.log('connected to websocket')
-            })
-
             // on message
-            ws.on('message', (message: string) => {
-                const transaction = ethers.Transaction.from('0x' + message)
+            ws.on('message', (message: Buffer) => {
+                const transaction = ethers.Transaction.from('0x' + message.toString('hex'))
 
                 txStream.emit('transaction', transaction)
             })
