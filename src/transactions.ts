@@ -29,7 +29,7 @@ class Transactions {
 
         function connect() {
             // connect to websocket
-            const ws = new WebSocket(`wss://txs.merkle.io/ws/${chainId}/${me._sdk.apiKey}`)
+            const ws = new WebSocket(`wss://txs.merkle.io/ws/${me._sdk.apiKey}`)
 
             // on open
             ws.on('open', () => {
