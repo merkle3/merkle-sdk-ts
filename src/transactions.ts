@@ -33,9 +33,13 @@ class Transactions {
 
             // on message
             ws.on('message', (message: Buffer) => {
-                const transaction = ethers.Transaction.from('0x' + message.toString('hex'))
+                try {
+                    const transaction = ethers.Transaction.from('0x' + message.toString('hex'))
 
-                txStream.emit('transaction', transaction)
+                    txStream.emit('transaction', transaction)
+                } catch(e) {
+                    // sometimes transactions are not valid, ignore them
+                }
             })
 
             // on error
