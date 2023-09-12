@@ -18,12 +18,12 @@ yarn add @mkl3/sdk
 
 ### Stream auctions
 
-Stream auctions from Merkle's private pool. [Learn more](https://docs.usemerkle.com/private-pool/what-is-merkle-private-pool)
+Stream auctions from Merkle's private pool. [Learn more](https://docs.merkle.io/private-pool/what-is-merkle-private-pool)
 
 ```typescript
 import Merkle from '@mkl3/sdk'
 
-const merkle = new Merkle('<API KEY>') // optional, get one at mbs.usemerkle.com
+const merkle = new Merkle('<API KEY>') // optional, get one at mbs.merkle.io
 
 // stream auctions and make bids
 merkle.pool.auctions().on('auction', auction => {
@@ -40,18 +40,18 @@ merkle.pool.auctions().on('auction', auction => {
 merkle.pool.send(tx, { // a signed ethers.Transaction
     // optional parameters
     feeRecipient: "0x", // where to receive the bid revenue, defaults to the tx.from
-    hints: [] // what hints to provide to searchers, see https://docs.usemerkle.com/private-pool/privacy
+    hints: [] // what hints to provide to searchers, see https://docs.merkle.io/private-pool/privacy
 }) 
 ```
 
 ### Stream transactions
 
-Stream transactions from Merkle's private network of transaction on Ethereum. [Learn more](https://docs.usemerkle.com/transaction-stream/what-is-merkle-transaction-stream)
+Stream transactions from Merkle's private network of transaction on Ethereum. [Learn more](https://docs.merkle.io/transaction-stream/what-is-merkle-transaction-stream)
 
 ```typescript
 import Merkle from '@mkl3/sdk'
 
-const merkle = new Merkle('<API KEY>') // optional, get one at mbs.usemerkle.com
+const merkle = new Merkle('<API KEY>') // optional, get one at mbs.merkle.io
 
 merkle.transactions.stream().on('transaction', tx => {
     console.log('tx from: ', tx.from)

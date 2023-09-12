@@ -1,7 +1,4 @@
 import MerkleSDK from "./sdk";
-import {loadSync} from "@grpc/proto-loader";
-import {credentials, loadPackageDefinition} from "@grpc/grpc-js";
-import {ServiceClientConstructor} from "@grpc/grpc-js/build/src/make-client";
 import { TypedEventEmitter } from "./utils/typed-events";
 import { ethers } from "ethers";
 import Backoff from "./utils/backoff";
