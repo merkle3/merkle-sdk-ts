@@ -54,28 +54,38 @@ class PrivatePool {
         const emitter = new TypedEventEmitter<PrivatePoolStreamEvents>();
         let timeout = new Backoff()
 
-        function connect() {
-            // open the websocket
-            const conn = new WebSocket('wss://pool.merkle.io/stream/auctions');
+        async function connect() {
+            const closed = new Promise((resolve) => {
+                // open the websocket
+                const conn = new WebSocket('wss://pool.merkle.io/stream/auctions');
 
-            // listen for messages
-            conn.onmessage = function (event: any) {
-                const data = JSON.parse(event.data) as Auction;
+                // listen for messages
+                conn.onmessage = function (event: any) {
+                    try {
+                        const data = JSON.parse(event.data) as Auction;
 
-                // emit the event
-                emitter.emit('auction', data);
-            };
+                        // emit the event
+                        emitter.emit('auction', data);
+                    } catch (e) {
+                        // ignore
+                    }
+                };
 
-            // on error
-            conn.onerror = function (event: WebSocket.ErrorEvent) {
-                // pass the error to the typed stream
-                emitter.emit('error', event.error);
-            };
+                // on error
+                conn.onerror = function (event: WebSocket.ErrorEvent) {
+                    // pass the error to the typed stream
+                    emitter.emit('error', event.error);
+                };
 
-            // on close, reconnect
-            conn.onclose = function () {
-                setTimeout(connect, timeout.next());
-            };
+                // on close, reconnect
+                conn.onclose = function () {
+                    setTimeout(() => {
+                        resolve(null)
+                    }, timeout.next())
+                };
+            })
+
+            await closed
         }
 
         connect()
@@ -104,7 +114,7 @@ class PrivatePool {
         if (this._sdk.apiKey) {
             headers['X-MBS-Key'] = this._sdk.apiKey
         }
-        
+
         const res = await fetch(`https://pool.merkle.io/relay`, {
             method: 'POST',
             body: JSON.stringify(body),
@@ -137,7 +147,7 @@ class PrivatePool {
         if (this._sdk.apiKey) {
             headers['X-MBS-Key'] = this._sdk.apiKey
         }
-        
+
         const res = await fetch(`https://pool.merkle.io/transactions`, {
             method: 'POST',
             body: JSON.stringify(body),
@@ -151,7 +161,7 @@ class PrivatePool {
         const data = await res.json()
 
         return data
-    }  
+    }
 }
- 
+
 export default PrivatePool;
