@@ -1,2 +1,2 @@
-import MerkleSDK from './sdk';
+import MerkleSDK from "./sdk";
 export default MerkleSDK;

@@ -21,39 +21,46 @@ yarn add @mkl3/sdk
 Stream auctions from Merkle's private pool. [Learn more](https://docs.merkle.io/private-pool/what-is-merkle-private-pool)
 
 ```typescript
-import Merkle from '@mkl3/sdk'
+import Merkle from "@mkl3/sdk";
 
-const merkle = new Merkle('<API KEY>') // optional, get one at mbs.merkle.io
+const merkle = new Merkle("<API KEY>"); // optional, get one at mbs.merkle.io
 
 // stream auctions and make bids
-merkle.pool.auctions().on('auction', auction => {
-    console.log('new auction: ', auction)
+merkle.pool.auctions().on("auction", (auction) => {
+  console.log("new auction: ", auction);
 
-    // construct a backrun
-    const backrun = "0x...."
+  // construct a backrun
+  const backrun = "0x....";
 
-    // make a bid
-    merkle.pool.bid(auction.transaction.hash, backrun)
-})
+  // make a bid
+  merkle.pool.bid(auction.transaction.hash, backrun);
+});
 
 // send new transactions for auctions
-merkle.pool.send(tx, { // a signed ethers.Transaction
-    // optional parameters
-    feeRecipient: "0x", // where to receive the bid revenue, defaults to the tx.from
-    hints: [] // what hints to provide to searchers, see https://docs.merkle.io/private-pool/privacy
-}) 
+merkle.pool.send(tx, {
+  // a signed ethers.Transaction
+  // optional parameters
+  feeRecipient: "0x", // where to receive the bid revenue, defaults to the tx.from
+  hints: [], // what hints to provide to searchers, see https://docs.merkle.io/private-pool/privacy
+});
 ```
 
 ### Stream transactions
 
-Stream transactions from Merkle's private network of transaction on Ethereum. [Learn more](https://docs.merkle.io/transaction-stream/what-is-merkle-transaction-stream)
+Stream transactions from Merkle's private network of transaction on Ethereum & Polygon. [Learn more](https://docs.merkle.io/transaction-stream/what-is-merkle-transaction-stream)
 
 ```typescript
-import Merkle from '@mkl3/sdk'
+import Merkle from "@mkl3/sdk";
 
-const merkle = new Merkle('<API KEY>') // optional, get one at mbs.merkle.io
+const merkle = new Merkle("<API KEY>"); // optional, get one at mbs.merkle.io
 
-merkle.transactions.stream().on('transaction', tx => {
-    console.log('tx from: ', tx.from)
-})
+// stream ethereum transactions
+merkle.transactions.stream().on("transaction", (tx) => {
+  console.log("tx from: ", tx.from);
+});
+
+// stream polygon transactions
+merkle.transactions.stream(137).on("transaction", (tx) => {
+  console.log("tx from: ", tx.from);
+});
 ```
