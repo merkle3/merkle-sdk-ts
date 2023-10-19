@@ -63,4 +63,9 @@ merkle.transactions.stream().on("transaction", (tx) => {
 merkle.transactions.stream(137).on("transaction", (tx) => {
   console.log("tx from: ", tx.from);
 });
+
+// stream bnb transactions
+merkle.transactions.stream(56).on("transaction", (tx) => {
+  console.log("tx from: ", tx.from);
+});
 ```
