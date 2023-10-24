@@ -3,6 +3,8 @@
   "compilerOptions": {
       "module": "esnext",
       "outDir": "dist/mjs",
-      "target": "esnext"
+      "target": "esnext",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
   }
 }

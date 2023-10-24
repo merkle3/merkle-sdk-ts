@@ -47,12 +47,37 @@ merkle.pool.send(tx, {
 
 ### Stream transactions
 
-Stream transactions from Merkle's private network of transaction on Ethereum & Polygon. [Learn more](https://docs.merkle.io/transaction-stream/what-is-merkle-transaction-stream)
+Stream transactions from Merkle's private network of transaction on Ethereum, Polygon and BSC. [Learn more](https://docs.merkle.io/transaction-stream/what-is-merkle-transaction-stream)
+
+Typescript:
 
 ```typescript
 import Merkle from "@mkl3/sdk";
 
-const merkle = new Merkle("<API KEY>"); // optional, get one at mbs.merkle.io
+const merkle = new Merkle("<API KEY>"); // get one at mbs.merkle.io
+
+// stream ethereum transactions
+merkle.transactions.stream().on("transaction", (tx) => {
+  console.log("tx from: ", tx.from);
+});
+
+// stream polygon transactions
+merkle.transactions.stream(137).on("transaction", (tx) => {
+  console.log("tx from: ", tx.from);
+});
+
+// stream bnb transactions
+merkle.transactions.stream(56).on("transaction", (tx) => {
+  console.log("tx from: ", tx.from);
+});
+```
+
+Javascript:
+
+```javascript
+import Merkle from "@mkl3/sdk";
+
+const merkle = new Merkle("<API KEY>"); //get one at mbs.merkle.io
 
 // stream ethereum transactions
 merkle.transactions.stream().on("transaction", (tx) => {
