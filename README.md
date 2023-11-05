@@ -45,9 +45,9 @@ merkle.pool.send(tx, {
 });
 ```
 
-### Stream transactions
+### Stream public mempool transactions
 
-Stream transactions from Merkle's private network of transaction on Ethereum, Polygon and BSC. [Learn more](https://docs.merkle.io/transaction-stream/what-is-merkle-transaction-stream)
+Stream public mempool transactions from merkle's ultra fast network on Ethereum, Polygon and BSC. [Learn more](https://docs.merkle.io/transaction-stream/what-is-merkle-transaction-stream)
 
 Typescript:
 
@@ -92,5 +92,20 @@ merkle.transactions.stream(137).on("transaction", (tx) => {
 // stream bnb transactions
 merkle.transactions.stream(56).on("transaction", (tx) => {
   console.log("tx from: ", tx.from);
+});
+```
+
+## Transaction tracing
+
+Know exactly when and where a transaction was broadcasted. [Learn more](https://docs.merkle.io/transaction-network/tracing)
+
+```typescript
+import Merkle from "@mkl3/sdk";
+
+const merkle = new Merkle("<API KEY>"); //get one at mbs.merkle.io
+
+// trace a transaction
+merkle.transactions.trace("0x...").then((trace) => {
+  console.log("trace: ", trace);
 });
 ```

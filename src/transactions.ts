@@ -3,6 +3,7 @@ import { TypedEventEmitter } from "./utils/typed-events";
 import { ethers } from "ethers";
 import Backoff from "./utils/backoff";
 import { WebSocket } from "ws";
+import fetch from "node-fetch";
 
 type TypedEventEmitterEvents = {
   transaction: [ethers.Transaction];
@@ -14,6 +15,17 @@ export enum Chains {
   Polygon = 137,
   BinanceSmartChain = 56,
 }
+
+export type TransactionTrace = {
+  hash: string;
+  chainId: Chains;
+  firstSeenAt: Date;
+  trace: {
+    time: Date;
+    origin: string;
+  }[];
+  txData: string;
+};
 
 class Transactions {
   private _sdk: MerkleSDK;
@@ -69,6 +81,29 @@ class Transactions {
     connect();
 
     return txStream;
+  }
+
+  async trace(txHash: string): Promise<TransactionTrace | null> {
+    const url = `https://txs.merkle.io/trace/${txHash}`;
+
+    const response = await fetch(url);
+
+    if (response.status == 404) {
+      return null;
+    }
+
+    const body = await response.json();
+
+    return {
+      firstSeenAt: new Date(body.firstSeenAt),
+      hash: body.hash,
+      chainId: body.chainId,
+      trace: body.trace.map((t: any) => ({
+        time: new Date(t.time),
+        origin: t.origin,
+      })),
+      txData: body.txData,
+    };
   }
 }
 
