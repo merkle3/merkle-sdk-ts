@@ -1,14 +1,14 @@
 <img src="public/merkle-large.png" width="80" height="80" style="border-radius: 4px"/>
 
-**Merkle is building crypto infrastructure**. [Join us on discord](https://discord.gg/Q9Dc7jVX6c).
+**merkle is building crypto infrastructure**. [Join us on discord](https://discord.gg/Q9Dc7jVX6c).
 
-# Merkle SDK
+# merkle SDK
 
-The Merkle SDK is a great way to access our products.
+The merkle SDK is a great way to access our products.
 
 ## Install
 
-Install the Merkle SDK package:
+Install the merkle SDK package:
 
 ```
 yarn add @mkl3/sdk
@@ -18,7 +18,7 @@ yarn add @mkl3/sdk
 
 ### Stream auctions
 
-Stream auctions from Merkle's private pool. [Learn more](https://docs.merkle.io/private-pool/what-is-merkle-private-pool)
+Stream auctions from merkle's private pool. [Learn more](https://docs.merkle.io/private-pool/what-is-merkle-private-pool)
 
 ```typescript
 import Merkle from "@mkl3/sdk";
