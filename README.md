@@ -95,7 +95,7 @@ merkle.transactions.stream(56).on("transaction", (tx) => {
 });
 ```
 
-## Transaction tracing
+### Transaction tracing
 
 Know exactly when and where a transaction was broadcasted. [Learn more](https://docs.merkle.io/transaction-network/tracing)
 
