@@ -104,7 +104,7 @@ import Merkle from "@mkl3/sdk";
 
 const merkle = new Merkle("<API KEY>"); //get one at mbs.merkle.io
 
-// trace a transaction
+// trace a transaction with its hash
 merkle.transactions.trace("0x...").then((trace) => {
   console.log("trace: ", trace);
 });
