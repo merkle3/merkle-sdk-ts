@@ -75,7 +75,7 @@ merkle.transactions.stream(56).on("transaction", (tx) => {
 Javascript:
 
 ```javascript
-import Merkle from "@mkl3/sdk";
+const Merkle = require("@mkl3/sdk");
 
 const merkle = new Merkle("<API KEY>"); //get one at mbs.merkle.io
 
