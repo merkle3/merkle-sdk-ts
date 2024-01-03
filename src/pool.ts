@@ -57,7 +57,7 @@ class PrivatePool {
     async function connect() {
       const closed = new Promise((resolve) => {
         // open the websocket
-        const conn = new WebSocket("wss://pool.merkle.io/stream/auctions");
+        const conn = new WebSocket("wss://mempool.merkle.io/stream/auctions");
 
         // listen for messages
         conn.onmessage = function (event: any) {
@@ -114,7 +114,7 @@ class PrivatePool {
       headers["X-MBS-Key"] = this._sdk.apiKey;
     }
 
-    const res = await fetch(`https://pool.merkle.io/relay`, {
+    const res = await fetch(`https://mempool.merkle.io/relay`, {
       method: "POST",
       body: JSON.stringify(body),
       headers,
@@ -155,7 +155,7 @@ class PrivatePool {
       headers["X-MBS-Key"] = this._sdk.apiKey;
     }
 
-    const res = await fetch(`https://pool.merkle.io/transactions`, {
+    const res = await fetch(`https://mempool.merkle.io/transactions`, {
       method: "POST",
       body: JSON.stringify(body),
       headers,
