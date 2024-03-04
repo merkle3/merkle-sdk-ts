@@ -56,6 +56,7 @@ export type InternalTransfer = {
 };
 
 export type SimulationResult = {
+  id: string;
   chainId: number;
   blockNumber: bigint;
   processTime: number;
