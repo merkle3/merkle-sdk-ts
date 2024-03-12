@@ -40,13 +40,19 @@ export type SimulationCallResult = {
   }[];
   gasUsed: bigint;
   result: string;
-  addressCreated?: string;
+  addressCreated?: Record<string, string>;
   status: number;
+  updatedSlots: {
+    address: string;
+    slot: string;
+    value: string;
+  }[];
+  updatedAccounts: Record<string, string>;
+  updatedBytecodes: Record<string, string>;
   error?: {
     type: string;
     message: string;
   };
-  internalTransfers?: InternalTransfer[];
 };
 
 export type InternalTransfer = {
