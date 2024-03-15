@@ -1,18 +1,20 @@
 import fetch from "node-fetch";
 import MerkleSDK from "sdk";
 
+type Hex = `0x${string}`;
+
 export type StateOverrideParameters = {
   accounts?: Record<
     string,
     Partial<{
       nonce: number;
-      balance: number;
+      balance: string;
     }>
   >;
 
-  contractCodes?: Record<string, Uint8Array>;
+  contractCodes?: Record<string, Hex>;
 
-  storage?: Record<string, Record<string, Uint8Array>>;
+  storage?: Record<string, Record<string, Hex>>;
 };
 
 export type Call = {
@@ -42,13 +44,7 @@ export type SimulationCallResult = {
   result: string;
   addressCreated?: Record<string, string>;
   status: number;
-  updatedSlots: {
-    address: string;
-    slot: string;
-    value: string;
-  }[];
-  updatedAccounts: Record<string, string>;
-  updatedBytecodes: Record<string, string>;
+  updated: StateOverrideParameters;
   error?: {
     type: string;
     message: string;

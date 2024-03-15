@@ -1,6 +1,6 @@
 {
   "name": "@mkl3/sdk",
-  "version": "1.0.29",
+  "version": "1.0.30",
   "license": "MIT",
   "private": false,
   "main": "dist/cjs/index.js",
@@ -28,5 +28,6 @@
     "@types/node": "^18.16.2",
     "jest": "^29.5.0",
     "typescript": "^5.0.4"
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
