@@ -28,6 +28,7 @@ export type Call = {
 };
 
 export type Bundle = {
+  rpcUrl?: string;
   chainId: number;
   blockNumber?: number;
   calls: Call[];
