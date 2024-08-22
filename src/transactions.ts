@@ -66,12 +66,19 @@ class Transactions {
           ws.on("error", (error: Error) => {
             // pass the error to the typed stream
             txStream.emit("error", error);
+            resolve(null);
           });
 
           // on close
           ws.on("close", () => {
             resolve(null);
           });
+
+          // automatically close the connection after 10 minutes
+          // and restart it
+          setTimeout(() => {
+            ws.close();
+          }, 10 * 60 * 1000);
         });
 
         await closed;
